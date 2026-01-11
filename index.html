@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Islands Price List</title>
     <style>
-        /* Allgemeines Seiten-Layout */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #1a1a1a; /* dunkles Grau/Schwarz */
+            background: #1a1a1a; /* dark gray/black background */
             padding: 20px;
             color: #e0e0e0;
         }
@@ -18,7 +17,6 @@
             margin: 0 auto;
         }
 
-        /* Überschrift mit weißem Text und schwarzer Umrandung */
         h1 {
             color: white;
             text-align: center;
@@ -29,7 +27,22 @@
                  1px  1px 0 #000;
         }
 
-        /* Tabelle bleibt gleich, außer Kopfbereich */
+        /* Search bar styling */
+        #searchInput {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #2a2a2a;
+            color: #fff;
+            font-size: 1em;
+        }
+
+        #searchInput::placeholder {
+            color: #aaa;
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
@@ -45,7 +58,7 @@
         }
 
         th {
-            background: #27ae60; /* Grün statt Blau */
+            background: #27ae60; /* Green header */
             color: white;
         }
 
@@ -68,8 +81,11 @@
 <body>
     <div class="container">
         <h1>Roblox Islands - Price List</h1>
-        
-        <table>
+
+        <!-- Search bar -->
+        <input type="text" id="searchInput" placeholder="Search for an item...">
+
+        <table id="priceTable">
             <thead>
                 <tr>
                     <th>Item Name</th>
@@ -77,22 +93,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Iron Ore</td>
-                    <td>100</td>
-                </tr>
-                <tr>
-                    <td>Gold Ore</td>
-                    <td>500</td>
-                </tr>
-                <tr>
-                    <td>Steel Ingot</td>
-                    <td>2,500</td>
-                </tr>
-                <tr>
-                    <td>Cryolite</td>
-                    <td>15,000</td>
-                </tr>
+                <tr><td>Iron Ore</td><td>100</td></tr>
+                <tr><td>Gold Ore</td><td>500</td></tr>
+                <tr><td>Steel Ingot</td><td>2,500</td></tr>
+                <tr><td>Cryolite</td><td>15,000</td></tr>
+                <tr><td>Maple Wood</td><td>80</td></tr>
+                <tr><td>Diamond</td><td>50,000</td></tr>
+                <tr><td>Tomato Seed</td><td>200</td></tr>
             </tbody>
         </table>
 
@@ -100,5 +107,23 @@
             <p>Last updated: March 2024</p>
         </div>
     </div>
+
+    <script>
+        // Live search function
+        const input = document.getElementById('searchInput');
+        const table = document.getElementById('priceTable');
+        const rows = table.getElementsByTagName('tr');
+
+        input.addEventListener('keyup', function() {
+            const filter = input.value.toLowerCase();
+            for (let i = 1; i < rows.length; i++) { // Start from 1 to skip header
+                const cell = rows[i].getElementsByTagName('td')[0];
+                if (cell) {
+                    const textValue = cell.textContent || cell.innerText;
+                    rows[i].style.display = textValue.toLowerCase().includes(filter) ? '' : 'none';
+                }
+            }
+        });
+    </script>
 </body>
 </html>
